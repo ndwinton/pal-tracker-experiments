@@ -1,30 +1,45 @@
 package io.pivotal.pal.tracker;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InMemoryTimeEntryRepository implements TimeEntryRepository {
+    Map<Long,TimeEntry> entries = new HashMap<>();
+    long nextId = 1;
+
     @Override
     public TimeEntry create(TimeEntry timeEntry) {
-        return null;
+        TimeEntry entryWithId = cloneEntryWithId(nextId, timeEntry);
+        entries.put(nextId, entryWithId);
+        nextId++;
+        return entryWithId;
     }
 
     @Override
     public TimeEntry find(long id) {
-        return null;
+        return entries.get(id);
     }
 
     @Override
     public List<TimeEntry> list() {
-        return null;
+        return List.copyOf(entries.values());
     }
 
     @Override
     public TimeEntry update(long id, TimeEntry timeEntry) {
-        return null;
+        if (find(id) != null) {
+            entries.put(id, cloneEntryWithId(id, timeEntry));
+        }
+        return find(id);
+    }
+
+    private TimeEntry cloneEntryWithId(long id, TimeEntry timeEntry) {
+        return new TimeEntry(id, timeEntry.getProjectId(), timeEntry.getUserId(), timeEntry.getDate(), timeEntry.getHours());
     }
 
     @Override
     public void delete(long id) {
-
+        entries.remove(id);
     }
 }

@@ -29,6 +29,10 @@ public class TimeEntry {
         this(-1, -1, -1, null, -1);
     }
 
+    public TimeEntry(long id, TimeEntry other) {
+        this(id, other.getProjectId(), other.getUserId(), other.getDate(), other.getHours());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

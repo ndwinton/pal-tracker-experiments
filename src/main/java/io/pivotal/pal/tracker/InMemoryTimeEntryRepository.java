@@ -10,7 +10,7 @@ public class InMemoryTimeEntryRepository implements TimeEntryRepository {
 
     @Override
     public TimeEntry create(TimeEntry timeEntry) {
-        TimeEntry entryWithId = cloneEntryWithId(nextId, timeEntry);
+        TimeEntry entryWithId = new TimeEntry(nextId, timeEntry);
         entries.put(nextId, entryWithId);
         nextId++;
         return entryWithId;
@@ -28,12 +28,8 @@ public class InMemoryTimeEntryRepository implements TimeEntryRepository {
 
     @Override
     public TimeEntry update(long id, TimeEntry timeEntry) {
-        entries.replace(id, cloneEntryWithId(id, timeEntry));
+        entries.replace(id, new TimeEntry(id, timeEntry));
         return find(id);
-    }
-
-    private TimeEntry cloneEntryWithId(long id, TimeEntry timeEntry) {
-        return new TimeEntry(id, timeEntry.getProjectId(), timeEntry.getUserId(), timeEntry.getDate(), timeEntry.getHours());
     }
 
     @Override

@@ -12,6 +12,9 @@ http $URL/$TIME_ENTRY_ID
 
 http PUT $URL/$TIME_ENTRY_ID projectId=88 userId=99 date="2019-01-01" hours=8
 
+http $URL
+
 http DELETE $URL/$TIME_ENTRY_ID
 
+http $URL
 

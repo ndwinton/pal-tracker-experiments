@@ -6,12 +6,12 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class TimeEntry {
-    private long id;
-    private long projectId;
-    private long userId;
+    private final long id;
+    private final long projectId;
+    private final long userId;
     @JsonDeserialize(using = MultiDateDeserialiser.class, as = LocalDate.class)
-    private LocalDate date;
-    private int hours;
+    private final LocalDate date;
+    private final int hours;
 
     public TimeEntry(long id, long projectId, long userId, LocalDate date, int hours) {
         this.id = id;

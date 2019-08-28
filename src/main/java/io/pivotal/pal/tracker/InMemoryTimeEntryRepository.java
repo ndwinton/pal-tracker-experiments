@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 public class InMemoryTimeEntryRepository implements TimeEntryRepository {
-    Map<Long,TimeEntry> entries = new HashMap<>();
-    long nextId = 1;
+    private Map<Long,TimeEntry> entries = new HashMap<>();
+    private long nextId = 1;
 
     @Override
     public TimeEntry create(TimeEntry timeEntry) {

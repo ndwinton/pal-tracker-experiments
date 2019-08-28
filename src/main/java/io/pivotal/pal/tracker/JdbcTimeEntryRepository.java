@@ -1,9 +1,7 @@
 package io.pivotal.pal.tracker;
 
 import org.jdbi.v3.core.Jdbi;
-import org.jdbi.v3.core.result.ResultBearing;
 import org.jdbi.v3.core.statement.StatementContext;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -11,11 +9,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class JdbcTimeEntryRepository implements TimeEntryRepository {
-    private DataSource dataSource;
     private Jdbi jdbi;
 
     public JdbcTimeEntryRepository(DataSource dataSource) {
-        this.dataSource = dataSource;
         jdbi = Jdbi.create(dataSource);
     }
 

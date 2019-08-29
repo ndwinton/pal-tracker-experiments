@@ -23,7 +23,7 @@ public class JdbcTimeEntryRepository implements TimeEntryRepository {
                         .executeAndReturnGeneratedKeys("id")
                         .mapTo(Long.class).first());
 
-        return new TimeEntry(id, timeEntry);
+        return find(id);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class JdbcTimeEntryRepository implements TimeEntryRepository {
                         .bindBean(updated)
                         .execute());
 
-        return (updateCount > 0) ? updated : null;
+        return find(id);
     }
 
     @Override

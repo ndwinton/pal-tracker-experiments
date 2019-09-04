@@ -6,6 +6,8 @@ applications:
   - route: pal-tracker-nw.apps.evans.pal.pivotal.io
   env:
     WELCOME_MESSAGE: Hello from the review environment
+    MANAGEMENT_ENDPOINT_HEALTH_SHOWDETAILS: always
+    MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: '*'
     JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ } }'
   services:
   - tracker-database

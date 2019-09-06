@@ -18,7 +18,7 @@ public class JdbcTimeEntryRepository implements TimeEntryRepository {
     @Override
     public TimeEntry create(TimeEntry timeEntry) {
         Long id = jdbi.withHandle(handle ->
-                handle.createUpdate("INSERT INTO time_entries (project_id, user_id, date, hours) VALUES (:projectId, :userId, :date, :hours)")
+                handle.createUpdate("INSERT INTO time_entries (project_id, user_id, entry_date, hours) VALUES (:projectId, :userId, :date, :hours)")
                         .bindBean(timeEntry)
                         .executeAndReturnGeneratedKeys("id")
                         .mapTo(Long.class).first());
@@ -29,7 +29,7 @@ public class JdbcTimeEntryRepository implements TimeEntryRepository {
     @Override
     public TimeEntry find(long id) {
         return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT id, project_id, user_id, date, hours FROM time_entries WHERE id = ?")
+                handle.createQuery("SELECT id, project_id, user_id, entry_date, hours FROM time_entries WHERE id = ?")
                         .bind(0, id)
                         .map(this::timeEntryMapper)
                         .findFirst()
@@ -42,7 +42,7 @@ public class JdbcTimeEntryRepository implements TimeEntryRepository {
                 rs.getLong("id"),
                 rs.getLong("project_id"),
                 rs.getLong("user_id"),
-                rs.getDate("date").toLocalDate(),
+                rs.getDate("entry_date").toLocalDate(),
                 rs.getInt("hours")
         );
     }
@@ -60,7 +60,7 @@ public class JdbcTimeEntryRepository implements TimeEntryRepository {
     public TimeEntry update(long id, TimeEntry timeEntry) {
         TimeEntry updated = new TimeEntry(id, timeEntry);
         int updateCount = jdbi.withHandle(handle ->
-                handle.createUpdate("UPDATE time_entries SET project_id = :projectId, user_id = :userId, date = :date , hours = :hours WHERE id = :id")
+                handle.createUpdate("UPDATE time_entries SET project_id = :projectId, user_id = :userId, entry_date = :date , hours = :hours WHERE id = :id")
                         .bindBean(updated)
                         .execute());
 

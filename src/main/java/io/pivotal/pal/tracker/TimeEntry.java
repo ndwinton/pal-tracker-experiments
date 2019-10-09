@@ -2,10 +2,15 @@ package io.pivotal.pal.tracker;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
+@Table(name = "time_entries")
 public class TimeEntry {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private final long id;
     private final long projectId;
     private final long userId;
@@ -26,7 +31,7 @@ public class TimeEntry {
     }
 
     public TimeEntry() {
-        this(-1, -1, -1, null, -1);
+        this(0, -1, -1, null, -1);
     }
 
     public TimeEntry(long id, TimeEntry other) {
@@ -50,10 +55,6 @@ public class TimeEntry {
         return Objects.hash(id, projectId, userId, date, hours);
     }
 
-    public long getId() {
-        return id;
-    }
-
     @Override
     public String toString() {
         return "TimeEntry{" +
@@ -63,6 +64,10 @@ public class TimeEntry {
                 ", date=" + date +
                 ", hours=" + hours +
                 '}';
+    }
+
+    public long getId() {
+        return id;
     }
 
     public long getProjectId() {
